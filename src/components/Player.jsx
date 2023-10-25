@@ -13,7 +13,6 @@ const Player = (props) => {
 
   const intervalRef = React.useRef();
   const audioRef = React.useRef(new Audio());
-  const isReady = React.useRef(true);
   const { duration } = audioRef.current;
 
   const clickAudio = (e) => {
@@ -131,15 +130,10 @@ const Player = (props) => {
       `./assets/songs/${SongData[props.songIndex].name}.flac`
     );
     audioRef.current.volume = volume;
-    if (isReady.current) {
-      audioRef.current.play();
-      setPlaying(true);
-      setProgress(audioRef.current.currentTime);
-      startTimer();
-    } else {
-      // Set the isReady ref as true for the next pass
-      isReady.current = true;
-    }
+    audioRef.current.play();
+    setPlaying(true);
+    setProgress(audioRef.current.currentTime);
+    startTimer();
     setPlaying(audioRef.isPlaying);
   }, [props.songIndex]);
 
