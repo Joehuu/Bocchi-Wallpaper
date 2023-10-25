@@ -13,7 +13,7 @@ const Player = (props) => {
 
   const intervalRef = React.useRef();
   const audioRef = React.useRef(new Audio());
-  const { duration } = audioRef.current;
+  const [duration, setDuration] = React.useState(0);
 
   const clickAudio = (e) => {
     keypress.src = "./assets/audios/keypress.mp3";
@@ -25,12 +25,8 @@ const Player = (props) => {
     // Clear any timers already running
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      if (audioRef.current.ended) {
-        if (props.replay === true) {
-          audioRef.current.play();
-        } else {
-          skipButton(false);
-        }
+      if (audioRef.current.ended && !props.replay) {
+        skipButton(false);
       } else {
         setProgress(audioRef.current.currentTime);
       }
@@ -46,7 +42,7 @@ const Player = (props) => {
 
   const onScrubEnd = () => {
     // If not already playing, start
-    setPlaying(false);
+    setPlaying(true);
     startTimer();
   };
 
@@ -73,14 +69,12 @@ const Player = (props) => {
   };
 
   const playButton = () => {
-    setPlaying(false);
-    audioRef.current.play();
+    setPlaying(true);
     clickAudio();
   };
 
   const pauseButton = () => {
-    setPlaying(true);
-    audioRef.current.pause();
+    setPlaying(false);
     clickAudio();
   };
 
@@ -117,10 +111,10 @@ const Player = (props) => {
 
   React.useEffect(() => {
     if (isPlaying) {
-      audioRef.current.pause();
+      audioRef.current.play();
       startTimer();
     } else {
-      audioRef.current.play();
+      audioRef.current.pause();
     }
   }, [isPlaying]);
 
@@ -133,16 +127,9 @@ const Player = (props) => {
     audioRef.current.play();
     setPlaying(true);
     setProgress(audioRef.current.currentTime);
+    setDuration(audioRef.current);
     startTimer();
-    setPlaying(audioRef.isPlaying);
   }, [props.songIndex]);
-
-  React.useEffect(() => {
-    return () => {
-      audioRef.current.pause();
-      clearInterval(intervalRef.current);
-    };
-  }, []);
 
   //July 2023 Resizing Update
   const [titleSize, setTitleSize] = React.useState(1.25);
@@ -176,7 +163,7 @@ const Player = (props) => {
             step="1"
             min="0"
             value={trackProgress}
-            max={duration ? duration : `${duration}`}
+            max={duration}
             className="audio-progress"
             onChange={(e) => onScrub(e.target.value)}
             onClick={onScrubEnd}
@@ -213,16 +200,16 @@ const Player = (props) => {
           {isPlaying ? (
             <img
               className="audioIcon"
-              onClick={playButton}
+              onClick={pauseButton}
               alt=""
-              src="./assets/icons/play.png"
+              src="./assets/icons/pause.png"
             />
           ) : (
             <img
               className="audioIcon"
-              onClick={pauseButton}
+              onClick={playButton}
               alt=""
-              src="./assets/icons/pause.png"
+              src="./assets/icons/play.png"
             />
           )}
           <img
