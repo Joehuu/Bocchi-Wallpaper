@@ -20,6 +20,7 @@ const Main = () => {
   const [songList, setSongList] = React.useState([[], []]);
   const [uiVolume, setUiVolume] = React.useState(0.5);
   const [textSize, setTextSize] = React.useState(1);
+  const [showRomanized, setRomanized] = React.useState(true);
 
   const playerHandler = () => {
     //Changes and sets the music player
@@ -237,6 +238,7 @@ const Main = () => {
       applyUserProperties: function (properties) {
         if (properties.uiVolume) setUiVolume(properties.uiVolume.value * 0.1);
         if (properties.textsize) setTextSize(properties.textsize.value / 10);
+        if (properties.showromanized) setRomanized(properties.showromanized.value)
       },
     };
   } catch (e) {
@@ -253,8 +255,8 @@ const Main = () => {
       ) : null}
       <img
         className="mainImage"
-        src={`./assets/icons/${
-          SongData[songIndex].album ?? SongData[songIndex].name
+        src={`./assets/covers/${
+          SongData[songIndex].album ?? SongData[songIndex].nameRomanized
         }.jpg`}
         alt=""
         style={{ boxShadow: "1px 1px 12px #150625" }}
@@ -279,6 +281,7 @@ const Main = () => {
           mode={mode}
           addSong={addSong}
           removeSong={removeSong}
+          showRomanized={showRomanized}
         />
       ) : null}
       {clock === "true" ? (
@@ -297,6 +300,7 @@ const Main = () => {
           replay={replay}
           reShuffle={reShuffle}
           textSize={textSize}
+          showRomanized={showRomanized}
         />
       ) : null}
     </div>

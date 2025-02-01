@@ -30,7 +30,7 @@ const PlaylistItem = (props) => {
           borderRadius: props.songIndex === props.id - 1 ? "5px" : "0px",
         }}
       >
-        {props.index}. {SongData[props.id - 1].name}
+        {props.index}. {props.showRomanized ? SongData[props.id - 1].nameRomanized : SongData[props.id - 1].name ?? SongData[props.id - 1].nameRomanized }
       </p>
     </div>
   );

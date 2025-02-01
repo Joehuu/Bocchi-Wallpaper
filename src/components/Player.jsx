@@ -127,7 +127,7 @@ const Player = (props) => {
   React.useEffect(() => {
     audioRef.current.pause();
     audioRef.current = new Audio(
-      `./assets/songs/${SongData[props.songIndex].name}${
+      `./assets/songs/${SongData[props.songIndex].audioFilename ?? SongData[props.songIndex].nameRomanized}${
         SongData[props.songIndex]?.audioType ?? ".flac"
       }`,
     );
@@ -172,7 +172,7 @@ const Player = (props) => {
               fontSize: `${titleSize * props.textSize}rem`,
             }}
           >{`${
-            SongData[props.songIndex]?.label ?? SongData[props.songIndex].name
+            props.showRomanized ? SongData[props.songIndex].nameRomanized : SongData[props.songIndex]?.name ?? SongData[props.songIndex].nameRomanized
           }`}</p>
         </div>{" "}
         <div
