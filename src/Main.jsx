@@ -7,6 +7,7 @@ import SongData from "./components/SongData.json";
 import Playlist from "./components/Playlist";
 import { list } from "postcss";
 import TitleDisplay from "./TitleDisplay";
+import Lyrics from "./components/Lyrics";
 
 const Main = () => {
   const [songIndex, setIndex] = React.useState(0);
@@ -304,6 +305,7 @@ const Main = () => {
           titleDisplay={titleDisplay}
         />
       ) : null}
+      <Lyrics></Lyrics>
     </div>
   );
 };

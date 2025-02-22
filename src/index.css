@@ -199,5 +199,19 @@ code {
   margin: auto;
 }
 
+.lyrics {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  border-radius: 16px;
+  top: 27.5%;
+  right: 72.5%;
+  width: 25%;
+  height: 45%;
+  border: 4.5px solid;
+  text-align: center;
+}
+
 @media screen and (min-width: 1px) and (max-width: 1360px) {
 }
