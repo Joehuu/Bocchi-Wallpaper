@@ -256,8 +256,8 @@ const Main = () => {
       ) : null}
       <img
         className="mainImage"
-        src={`./assets/icons/${
-          SongData[songIndex].album ?? SongData[songIndex].name
+        src={`./assets/covers/${
+          SongData[songIndex].single ?? SongData[songIndex].album ?? SongData[songIndex].name
         }.jpg`}
         alt=""
         style={{ boxShadow: "1px 1px 12px #150625" }}
