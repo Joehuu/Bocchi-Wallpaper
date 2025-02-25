@@ -11,11 +11,11 @@ const Player = (props) => {
       ? +localStorage.getItem("volume")
       : 0.2,
   );
+  const [duration, setDuration] = React.useState(0);
 
   const intervalRef = React.useRef();
   const audioRef = React.useRef(new Audio());
   const isReady = React.useRef(true);
-  const { duration } = audioRef.current;
 
   const clickAudio = (e) => {
     keypress.src = "./assets/audios/keypress.mp3";
@@ -23,40 +23,20 @@ const Player = (props) => {
     keypress.play();
   };
 
-  const startTimer = () => {
-    // Clear any timers already running
-    clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      if (audioRef.current.ended) {
-        if (props.replay === true) {
-          audioRef.current.play();
-        } else {
-          skipButton(false);
-        }
-      } else {
-        setProgress(audioRef.current.currentTime);
-      }
-    }, [1000]);
-  };
-
   const onScrub = (value) => {
     // Clear any timers already running
     clearInterval(intervalRef.current);
     audioRef.current.currentTime = value;
-    setProgress(audioRef.current.currentTime);
   };
 
   const onScrubEnd = () => {
     // If not already playing, start
     setPlaying(false);
-    startTimer();
   };
 
   const prevButton = () => {
     if (audioRef.current.currentTime >= 3) {
       audioRef.current.currentTime = 0;
-      setProgress(audioRef.current.currentTime);
-      startTimer();
     } else {
       //Just send False
       props.changeSong(false);
@@ -111,6 +91,13 @@ const Player = (props) => {
     clickAudio();
   };
 
+  const toReadableTime = (seconds) => {
+    if (isNaN(seconds)) return;
+    var date = new Date(0);
+    date.setSeconds(seconds);
+    return date.toISOString().substring(15, 19);
+  };
+
   React.useEffect(() => {
     audioRef.current.volume = volume;
     localStorage.setItem("volume", volume);
@@ -119,7 +106,6 @@ const Player = (props) => {
   React.useEffect(() => {
     if (isPlaying) {
       audioRef.current.pause();
-      startTimer();
     } else {
       audioRef.current.play();
     }
@@ -137,7 +123,6 @@ const Player = (props) => {
       audioRef.current.play();
       setPlaying(true);
       setProgress(audioRef.current.currentTime);
-      startTimer();
     } else {
       // Set the isReady ref as true for the next pass
       isReady.current = true;
@@ -162,6 +147,18 @@ const Player = (props) => {
       setTitleSize(1.25);
     }
   }, [window.innerWidth]);
+
+  audioRef.current.addEventListener("durationchange", () => {
+    setDuration(audioRef.current.duration);
+  });
+
+  audioRef.current.addEventListener("timeupdate", () => {
+    setProgress(Math.floor(audioRef.current.currentTime));
+  });
+
+  audioRef.current.addEventListener("ended", () => {
+    skipButton(false);
+  });
 
   let title;
   
@@ -195,6 +192,7 @@ const Player = (props) => {
           className="w-full flex items-center justify-center"
           style={{ height: "25%" }}
         >
+          <p>{toReadableTime(trackProgress)}</p>
           <input
             type="range"
             step="1"
@@ -206,6 +204,7 @@ const Player = (props) => {
             onClick={onScrubEnd}
             onKeyUp={onScrubEnd}
           />
+          <p>{toReadableTime(duration)}</p>
         </div>
         <div
           className="flex items-center justify-evenly"
