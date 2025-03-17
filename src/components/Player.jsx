@@ -144,15 +144,15 @@ const Player = (props) => {
     }
   }, [window.innerWidth]);
 
-  audioRef.current.ontimeupdate = () => {
-    setProgress(Math.floor(audioRef.current.currentTime));
+  props.audioRef.current.ontimeupdate = () => {
+    setProgress(Math.floor(props.audioRef.current.currentTime));
   };
 
-  audioRef.current.ondurationchange = () => {
-    setDuration(audioRef.current.duration);
+  props.audioRef.current.ondurationchange = () => {
+    setDuration(props.audioRef.current.duration);
   };
 
-  audioRef.current.onended = () => {
+  props.audioRef.current.onended = () => {
     skipButton(false);
   };
 
