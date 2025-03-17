@@ -14,7 +14,6 @@ const Player = (props) => {
   );
   const [duration, setDuration] = React.useState(0);
 
-  const audioRef = React.useRef(new Audio());
   const isReady = React.useRef(true);
 
   const clickAudio = (e) => {
@@ -25,7 +24,7 @@ const Player = (props) => {
 
   const onScrub = (value) => {
     // Clear any timers already running
-    audioRef.current.currentTime = value;
+    props.audioRef.current.currentTime = value;
   };
 
   const onScrubEnd = () => {
@@ -34,8 +33,8 @@ const Player = (props) => {
   };
 
   const prevButton = () => {
-    if (audioRef.current.currentTime >= 3) {
-      audioRef.current.currentTime = 0;
+    if (props.audioRef.current.currentTime >= 3) {
+      props.audioRef.current.currentTime = 0;
     } else {
       //Just send False
       props.changeSong(false);
@@ -54,13 +53,13 @@ const Player = (props) => {
 
   const playButton = () => {
     setPlaying(false);
-    audioRef.current.play();
+    props.audioRef.current.play();
     clickAudio();
   };
 
   const pauseButton = () => {
     setPlaying(true);
-    audioRef.current.pause();
+    props.audioRef.current.pause();
     clickAudio();
   };
 
@@ -98,40 +97,40 @@ const Player = (props) => {
   };
 
   React.useEffect(() => {
-    audioRef.current.volume = volume;
+    props.audioRef.current.volume = volume;
     localStorage.setItem("volume", volume);
   }, [volume]);
 
   React.useEffect(() => {
     if (isPlaying) {
-      audioRef.current.pause();
+      props.audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      props.audioRef.current.play();
     }
   }, [isPlaying]);
 
   React.useEffect(() => {
-    audioRef.current.pause();
-    audioRef.current = new Audio(
+    props.audioRef.current.pause();
+    props.audioRef.current = new Audio(
       `./assets/songs/${toFilename(SongData[props.songIndex].name)}${
         SongData[props.songIndex]?.audioType ?? ".flac"
       }`,
     );
-    audioRef.current.volume = volume;
+    props.audioRef.current.volume = volume;
     if (isReady.current) {
-      audioRef.current.play();
+      props.audioRef.current.play();
       setPlaying(true);
-      setProgress(audioRef.current.currentTime);
+      setProgress(props.audioRef.current.currentTime);
     } else {
       // Set the isReady ref as true for the next pass
       isReady.current = true;
     }
-    setPlaying(audioRef.isPlaying);
+    setPlaying(props.audioRef.isPlaying);
   }, [props.songIndex]);
 
   React.useEffect(() => {
     return () => {
-      audioRef.current.pause();
+      props.audioRef.current.pause();
     };
   }, []);
 
@@ -146,15 +145,15 @@ const Player = (props) => {
     }
   }, [window.innerWidth]);
 
-  audioRef.current.ontimeupdate = () => {
-    setProgress(Math.floor(audioRef.current.currentTime));
+  props.audioRef.current.ontimeupdate = () => {
+    setProgress(Math.floor(props.audioRef.current.currentTime));
   };
 
-  audioRef.current.ondurationchange = () => {
-    setDuration(audioRef.current.duration);
+  props.audioRef.current.ondurationchange = () => {
+    setDuration(props.audioRef.current.duration);
   };
 
-  audioRef.current.onended = () => {
+  props.audioRef.current.onended = () => {
     skipButton(false);
   };
 
