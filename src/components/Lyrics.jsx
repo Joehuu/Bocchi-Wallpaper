@@ -15,7 +15,7 @@ const Lyrics = (props) => {
   React.useEffect(() => {
     // ensure current time is zero
     setCurrentTime(0);
-    fetch(`./assets/lyrics/${SongData[props.songIndex].filename ?? SongData[props.songIndex].name}.lrc`)
+    fetch(`./assets/lyrics/romanized/${SongData[props.songIndex].filename ?? SongData[props.songIndex].name}.lrc`)
       .then(res => res.text())
       .then(data => setLyrics(data.replace(/\r\n/g, '\n').replace(/\r/g, '\n')))
   }, [props.songIndex])
@@ -43,7 +43,7 @@ const Lyrics = (props) => {
         }}
         onClick={() => onLineClicked(startMillisecond)}
       >
-        <p>{content}</p>
+        {content}
       </div>
   )
 
