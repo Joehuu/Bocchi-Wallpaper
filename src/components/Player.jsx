@@ -112,7 +112,7 @@ const Player = (props) => {
     props.audioRef.current.pause();
     props.audioRef.current = new Audio(
       `./assets/songs/${SongData[props.songIndex].filename ?? SongData[props.songIndex].name}${
-        SongData[props.songIndex]?.audioType ?? ".mp3"
+        SongData[props.songIndex]?.audioType ?? ".opus"
       }`,
     );
     props.audioRef.current.volume = volume;
