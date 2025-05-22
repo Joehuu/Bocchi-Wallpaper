@@ -249,7 +249,7 @@ const Main = () => {
       ) : null}
       <img
         className="mainImage"
-        src={`./assets/icons/${
+        src={`./assets/iconss/${
           toFilename(SongData[songIndex].album ?? SongData[songIndex].name)
         }.jpg`}
         alt=""
