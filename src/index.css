@@ -20,6 +20,7 @@ code {
 .Main {
   height: 100vh;
   width: 100vw;
+  transition: background-color 0.2s ease-out;
 }
 
 .mainClock {
