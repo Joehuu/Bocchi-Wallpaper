@@ -40,7 +40,16 @@ const Clock = (props) => {
         color: `white`
       }}
     >
-      {hour + ":"}
+      <span
+        style={{
+          fontSize: `${secondSize * props.textSize}rem`,
+          color: `white`,
+          verticalAlign: hour < 12 ? `super` : ``,
+        }}
+      >
+        {hour < 12 ? "AM" : "PM"}
+      </span>
+      {hour % 12 + ":"}
       {minute > 9 ? minute : "0" + minute}
       <span
         className={`absolute bottom-[2.5vh]`}
