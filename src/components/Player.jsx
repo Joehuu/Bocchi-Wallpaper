@@ -1,7 +1,7 @@
 import React from "react";
 import SongData from "./SongData.json";
 import TitleDisplay from "../TitleDisplay";
-import { toFilename, useEffectEvent } from "../helpers";
+import { toFilename } from "../helpers";
 
 const Player = (props) => {
   let keypress = new Audio();
@@ -16,7 +16,7 @@ const Player = (props) => {
 
   const audioRef = React.useRef(props.audioRef.current);
 
-  const clickAudio = (e) => {
+  const clickAudio = () => {
     keypress.src = "./assets/audios/keypress.mp3";
     keypress.volume = props.uiVolume;
     keypress.play();
@@ -152,7 +152,7 @@ const Player = (props) => {
     return () => audio.removeEventListener("durationchange", updateDuration);
   }, [])
 
-  const onSongEnded = useEffectEvent(() => {
+  const onSongEnded = React.useEffectEvent(() => {
     if (props.replay === true) {
       audioRef.current.play();
     } else {
@@ -164,8 +164,6 @@ const Player = (props) => {
     const audio = audioRef.current;
     audio.addEventListener("ended", onSongEnded);
     return () => audio.removeEventListener("ended", onSongEnded);
-  // TODO: can probably remove after useEffectEvent is native
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   let title;
