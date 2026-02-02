@@ -101,7 +101,7 @@ const Playlist = (props) => {
     <div
       className="playlist"
       style={{
-        fontSize: `${titleSize * props.textSize}rem`,
+        fontSize: `1vw`,
         border: `4.5px solid ${SongData[props.songIndex].lineColor}`,
         boxShadow: "1px 1px 6px #150625",
       }}

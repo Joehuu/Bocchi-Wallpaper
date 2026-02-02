@@ -39,7 +39,7 @@ const Clock = (props) => {
     <p
       className={`p-8 leading-none absolute opacity-80 overflow-visible`}
       style={{
-        fontSize: `${mainSize * props.textSize}rem`,
+        fontSize: `8vw`,
         top: "79vh",
         right: "2vw",
         color: `white`
@@ -50,7 +50,7 @@ const Clock = (props) => {
       <span
         className={`absolute bottom-[2.5vh]`}
         style={{
-          fontSize: `${secondSize * props.textSize}rem`,
+          fontSize: `2vw`,
           color: `white`,
         }}
       >
@@ -59,7 +59,7 @@ const Clock = (props) => {
       <span
         className={`absolute top-[5vh]`}
         style={{
-          fontSize: `${secondSize * props.textSize}rem`,
+          fontSize: `2vw`,
           color: `white`,
         }}
       >

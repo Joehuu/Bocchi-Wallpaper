@@ -81,7 +81,7 @@ const Lyrics = (props) => {
   return (
     <div
       className="lrc-container"
-      style={{ border: `4.5px solid ${SongData[props.songIndex].lineColor}` }}
+      style={{ fontSize: `1vw`,border: `0.5vh solid ${SongData[props.songIndex].lineColor}` }}
     >
       <MultipleLrc
         className="lrc"

@@ -277,7 +277,6 @@ const Main = () => {
           toFilename(SongData[songIndex].album ?? SongData[songIndex].name)
         }.jpg`}
         alt=""
-        style={{ boxShadow: "1px 1px 12px #150625" }}
       />
       <Navigation
         uiVolume={uiVolume}

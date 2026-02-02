@@ -191,7 +191,7 @@ const Player = (props) => {
           <p
             className="playerText"
             style={{
-              fontSize: `${titleSize * props.textSize}rem`,
+              fontSize: `1vw`,
             }}
           >{`${
             title
