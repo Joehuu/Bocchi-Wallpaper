@@ -94,25 +94,11 @@ const Main = () => {
 
   const changeSong = (e) => {
     //Changes the song using conditions ~from player
+    const direction = e === true ? 1 : -1;
     if (mode === 0) {
       //Default Playlist
       if (shuffle === false) {
-        //Shuffle Scuffed mech
-        if (e === true) {
-          //Skip Button
-          if (songIndex + 1 < SongData.length) {
-            setIndex(songIndex + 1);
-          } else {
-            setIndex(0);
-          }
-        } else if (e === false) {
-          //Prev Button
-          if (songIndex - 1 < 0) {
-            setIndex(SongData.length - 1);
-          } else {
-            setIndex(songIndex - 1);
-          }
-        }
+        setIndex((songIndex + direction + SongData.length) % SongData.length);
       } else {
         setIndex(Math.floor(SongData.length * Math.random()));
       }
@@ -123,26 +109,8 @@ const Main = () => {
     ) {
       //Check if array is empty
       if (shuffle === false) {
-        const key = getKey(mode);
-        if (e === true) {
-          if (key + 1 < songList[mode - 1].length) {
-            setIndex(songList[mode - 1][key + 1] - 1);
-          } else {
-            setIndex(songList[mode - 1][0] - 1);
-          }
-        } else if (e === false) {
-          if (key - 1 < 0) {
-            const tempSong = songList[mode - 1];
-            const tempId = SongData.findIndex(
-              (e) => e.id === tempSong[tempSong.length - 1],
-            );
-            setIndex(tempId);
-          } else {
-            setIndex(songList[mode - 1][key - 1] - 1);
-          }
-        }
+        setIndex((songList[mode - 1][(getKey(mode) + direction + songList[mode - 1].length) % songList[mode - 1].length] - 1));
       } else {
-        //Shuffle, it won't need a key because it's random :>
         setIndex(
           songList[mode - 1][
             Math.floor(songList[mode - 1].length * Math.random())
