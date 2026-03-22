@@ -5,4 +5,7 @@ updates:
     schedule:
       interval: "monthly"
     groups:
-      dependencies:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
