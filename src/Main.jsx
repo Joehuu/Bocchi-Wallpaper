@@ -93,29 +93,35 @@ const Main = () => {
   const getKey = (m) => songList[m - 1].findIndex((x) => x === songIndex + 1);
 
   const changeSong = (e) => {
-    //Changes the song using conditions ~from player
     const direction = e === true ? 1 : -1;
-    if (mode === 0) {
+    if (
       //Default Playlist
+      mode === 0
+    ) {
       if (shuffle === false) {
         setIndex((songIndex + direction + SongData.length) % SongData.length);
       } else {
-        setIndex(Math.floor(SongData.length * Math.random()));
+        const randomIndex = Math.floor(SongData.length * Math.random());
+        if (randomIndex === songIndex) {
+          setIndex((songIndex + 1) % SongData.length);
+        } else {
+          setIndex(randomIndex);
+        }
       }
     } else if (
-      (mode === 1 || mode === 2) &&
-      Array.isArray(songList[mode - 1]) &&
+      //Check if array is empty
       songList[mode - 1].length
     ) {
-      //Check if array is empty
       if (shuffle === false) {
         setIndex((songList[mode - 1][(getKey(mode) + direction + songList[mode - 1].length) % songList[mode - 1].length] - 1));
       } else {
-        setIndex(
-          songList[mode - 1][
-            Math.floor(songList[mode - 1].length * Math.random())
-          ] - 1,
-        );
+        const randomIndex = Math.floor(songList[mode - 1].length * Math.random());
+        const randomSongIndex = songList[mode - 1][randomIndex] - 1;
+        if (randomSongIndex === songIndex) {
+          setIndex(songList[mode - 1][(getKey(mode) + 1) % songList[mode - 1].length] - 1);
+        } else {
+          setIndex(randomSongIndex);
+        }
       }
     }
   };
