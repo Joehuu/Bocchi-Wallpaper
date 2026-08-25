@@ -16,14 +16,18 @@ You need to have Node/NPM to be installed in your system to be able to build the
 that you'll need to edit for you to add custom songs. <br/>
 
 ##  SongData JSON structure
-```
+
+```json
 {
     "id": 1,
-    "name": "Guitar, Loneliness and Blue Planet", // Name for both files, the image and the music/mp3 file. Everything in the wallpaper that I built has the same image type and music type which I didn't need to indicate here
-    "backgroundColor": "#4C2633", // Color of the background. I based my colors from the colors that youtube provided.
-    "clockTextShadow": "3px 3px rgba(237, 112 ,154 ,.7)", // Color for the text shadow, which is the primary color of the image.
-    "lineColor": "rgba(237, 112 ,154 ,.9)", // Similiar data as clocktextshadow.
-    "playerTextShadow": "2px 2px rgba(237, 112 ,154 ,.7)" // Similiar data as clocktextshadow.
+    "name": "Guitar, Loneliness and Blue Planet", // Required. English (or romanized if not provided) title of the song, which is displayed in the player and playlist. Also specifies the filename for the music and singles cover.
+    "nameOriginal": "ギターと孤独と蒼い惑星", // Optional. Used to specify the title in the original language. If null, assume the title is English-only and fallback to name.
+    "nameRomanized": "Guitar to Kodoku to Aoi Hoshi", // Optional. Used to specify the romanized title. If null, assume there is no English title or title in original language and fallback to name.
+    "audioType": ".mp3", // Optional. Used to specify an audio format. If null, fallback to .flac.
+    "album": "", // Optional. Used to specify an album and the filename of the cover image. If null, fallback to name.
+    "single": "", // Optional. Used to specify a single with multiple songs and the filename of the cover image. If null, fallback to album.
+    "backgroundColor": "#4C2633", // Color of the background. Colors may be based from what YouTube provided.
+    "lineColor": "rgba(237, 112 ,154 ,.9)", // Border color of the playlist.
   }
 ```
 ##  Built with

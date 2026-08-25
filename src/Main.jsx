@@ -299,7 +299,6 @@ const Main = () => {
       ) : null}
       {clock === "true" ? (
         <Clock
-          textShadow={SongData[songIndex].clockTextShadow}
           textSize={textSize}
           use24HourClock={use24HourClock}
           showSeconds={showSeconds}
@@ -308,7 +307,6 @@ const Main = () => {
       {player === "true" ? (
         <Player
           uiVolume={uiVolume}
-          playerTextShadow={SongData[songIndex].playerTextShadow}
           songIndex={songIndex}
           changeSong={changeSong}
           shuffle={shuffle}
