@@ -3,6 +3,7 @@ import SongData from "./SongData.json";
 import { MultipleLrc, useRecoverAutoScrollImmediately } from "react-lrc";
 import { toFilename } from "../helpers";
 import LyricsDisplay from "../LyricsDisplay";
+import { parse } from "clrc";
 
 const Lyrics = (props) => {
   const [lyrics, setLyrics] = React.useState(["", ""]);
@@ -55,8 +56,8 @@ const Lyrics = (props) => {
     keyPress.play();
   }
 
-  const lineRenderer = ({ active, line: { children, startMillisecond } }) =>
-    <div
+  const lineRenderer = ({ index, active, line: { children, startMillisecond } }) => {
+    return <div
       style={{
         opacity: ".85",
         backgroundColor: active
@@ -66,6 +67,8 @@ const Lyrics = (props) => {
         color: active ? props.backgroundColor : `white`,
         fontWeight: active ? "500" : "normal",
         borderRadius: active ? "5px" : "0px",
+        width: children[0].content === " " || children[0].content === "" ? `${(1 - (currentTime - startMillisecond) / (parse(lyrics[0])[index + 2].startMillisecond - startMillisecond)) * 100}%` : "100%",
+        margin: "auto"
       }}
       onClick={() => onLineClicked(startMillisecond)}
     >
@@ -77,6 +80,7 @@ const Lyrics = (props) => {
           : children[0].content
       }
     </div>
+  }
 
   return (
     <div
